@@ -1,3 +1,4 @@
+cat << 'EOF' > /root/cf_dns_and_acme_cert.sh
 #!/bin/bash
 set -e
 
@@ -289,3 +290,7 @@ CRON_CMD="/bin/bash /root/cf_dns_and_acme_cert.sh ${MY_SUB} >> /var/log/cf_dns_a
 ) | crontab -
 
 echo "✅ 已加入定时任务：每日 GMT 19:00 执行本脚本（MY_SUB=${MY_SUB}）"
+EOF
+
+chmod +x /root/cf_dns_and_acme_cert.sh
+bash /root/cf_dns_and_acme_cert.sh o3
