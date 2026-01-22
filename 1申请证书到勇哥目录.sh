@@ -32,10 +32,15 @@ else
       exit 0
       ;;
     --sub)
-      MY_SUB="${2:-}"
+      if [ -z "${2:-}" ]; then
+        echo "❌ --sub 后必须跟 MY_SUB 参数"
+        usage
+        exit 1
+      fi
+      MY_SUB="$2"
       ;;
     *)
-      MY_SUB="${1:-}"
+      MY_SUB="$1"
       ;;
   esac
 fi
