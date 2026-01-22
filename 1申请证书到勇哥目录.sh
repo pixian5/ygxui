@@ -1,4 +1,4 @@
-cat << 'EOF' > /root/step1.sh
+cat << 'STEP1_EOF' > /root/step1.sh
 #!/bin/bash
 set -e
 
@@ -6,7 +6,7 @@ set -e
 DEFAULT_MY_SUB="o3"
 MY_SUB="${1:-$DEFAULT_MY_SUB}"
 
-# 校验（同你原脚本一致）
+# 校验
 if ! echo "$MY_SUB" | grep -Eq '^[a-zA-Z0-9][a-zA-Z0-9-]{0,61}$'; then
   echo "❌ MY_SUB 非法：只能是字母/数字/短横线，且长度 1~62，且不能以 - 开头"
   echo "   当前：$MY_SUB"
@@ -17,8 +17,8 @@ echo "✅ 生成器收到参数：MY_SUB=$MY_SUB"
 echo "✅ 将生成并执行：/root/cf_dns_and_acme_cert.sh"
 echo
 
-# ===== 生成真正的业务脚本（注意：这里用 EOF 不能加单引号，否则变量不会展开）=====
-cat << EOF > /root/cf_dns_and_acme_cert.sh
+# ===== 生成真正的业务脚本（这里不能用单引号 heredoc，否则 MY_SUB 不会注入）=====
+cat << CFACME_EOF > /root/cf_dns_and_acme_cert.sh
 #!/bin/bash
 set -e
 
@@ -211,13 +211,13 @@ CRON_CMD="/bin/bash /root/cf_dns_and_acme_cert.sh >> /var/log/cf_dns_and_acme_ce
 ) | crontab -
 
 echo "✅ 已加入定时任务：每日 GMT 19:00 执行本脚本（MY_SUB=\${MY_SUB}）"
-EOF
+CFACME_EOF
 
 chmod +x /root/cf_dns_and_acme_cert.sh
 
 # 生成后立刻执行（业务脚本已写死 MY_SUB，无需传参）
 bash /root/cf_dns_and_acme_cert.sh
-EOF
+STEP1_EOF
 
 chmod +x /root/step1.sh
 echo "✅ 生成器已写入：/root/step1.sh"
