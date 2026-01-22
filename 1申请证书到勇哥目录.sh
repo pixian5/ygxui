@@ -23,7 +23,7 @@ cat << EOF > /root/cf_dns_and_acme_cert.sh
 set -e
 
 # ================= 配置变量区（默认值） =================
-MY_SUB="${MY_SUB}" 
+MY_SUB="${MY_SUB}"
 DOMAIN="xbz.email"
 CF_TOKEN="Wfzj8EiELSTTnKbctM9qTuyv8ga23WTW3W-Lj3KJ"
 
@@ -31,7 +31,6 @@ CERT_BASE="/root/ygkkkca"
 KEY_FILE="\$CERT_BASE/private.key"
 CRT_FILE="\$CERT_BASE/cert.crt"
 # =======================================================
-
 
 # ---------- 依赖 MY_SUB 的派生变量 ----------
 SUB_DOMAIN="\${MY_SUB}.\${DOMAIN}"
@@ -205,7 +204,8 @@ echo "✅ 证书自动续期已启用（每日 UTC 20:00）"
 echo
 show_cert_info
 
-CRON_CMD="/bin/bash /root/cf_dns_and_acme_cert.sh \${MY_SUB} >> /var/log/cf_dns_and_acme_cert.log 2>&1"
+# cron：业务脚本已定制 MY_SUB，不再传参
+CRON_CMD="/bin/bash /root/cf_dns_and_acme_cert.sh >> /var/log/cf_dns_and_acme_cert.log 2>&1"
 ( crontab -l 2>/dev/null | grep -v '/root/cf_dns_and_acme_cert.sh' || true
   echo "0 19 * * * TZ=GMT \$CRON_CMD"
 ) | crontab -
@@ -215,8 +215,8 @@ EOF
 
 chmod +x /root/cf_dns_and_acme_cert.sh
 
-# 生成后立刻执行：把生成器的参数也传给业务脚本
-bash /root/cf_dns_and_acme_cert.sh "$MY_SUB"
+# 生成后立刻执行（业务脚本已写死 MY_SUB，无需传参）
+bash /root/cf_dns_and_acme_cert.sh
 EOF
 
 chmod +x /root/step1.sh
