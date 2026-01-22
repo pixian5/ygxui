@@ -23,7 +23,7 @@ cat << EOF > /root/cf_dns_and_acme_cert.sh
 set -e
 
 # ================= 配置变量区（默认值） =================
-DEFAULT_MY_SUB="${MY_SUB}"              # 由生成器注入（不传参时生成器默认 o3）
+MY_SUB="${MY_SUB}" 
 DOMAIN="xbz.email"
 CF_TOKEN="Wfzj8EiELSTTnKbctM9qTuyv8ga23WTW3W-Lj3KJ"
 
