@@ -222,3 +222,4 @@ STEP1_EOF
 chmod +x /root/step1.sh
 echo "✅ 生成器已写入：/root/step1.sh"
 echo "用法：bash /root/step1.sh ziyuming"
+bash /root/step1.sh MY_SUB
