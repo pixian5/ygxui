@@ -1,4 +1,4 @@
-cat << 'STEP1_EOF' > /root/step1.sh
+cat << 'STEP1_EOF' > /root/sub.sh
 #!/bin/bash
 set -e
 
@@ -219,7 +219,7 @@ chmod +x /root/cf_dns_and_acme_cert.sh
 bash /root/cf_dns_and_acme_cert.sh
 STEP1_EOF
 
-chmod +x /root/step1.sh
-echo "✅ 生成器已写入：/root/step1.sh"
-echo "用法：bash /root/step1.sh ziyuming"
-bash /root/step1.sh MY_SUB
+chmod +x /root/sub.sh
+echo "✅ 生成器已写入：/root/sub.sh"
+echo "用法：bash /root/sub.sh ziyuming"
+bash /root/sub.sh $MY_SUB
