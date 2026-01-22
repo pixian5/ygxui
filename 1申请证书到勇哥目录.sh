@@ -1,4 +1,4 @@
-cat << 'EOF' > /root/cf_dns_and_acme_cert.sh
+cat << 'EOF' > /root/step1.sh
 #!/bin/bash
 set -e
 
@@ -154,4 +154,4 @@ echo
 show_cert_info
 EOF
 
-chmod +x /root/cf_dns_and_acme_cert.sh
+chmod +x /root/step1.sh
